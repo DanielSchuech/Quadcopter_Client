@@ -12,8 +12,8 @@
 #include <math.h>
 #include <sstream>
 
-//#define IP "192.168.178.30"
-#define IP "192.168.43.220" 
+#define IP "192.168.178.30"
+//#define IP "192.168.43.220" 
 #define PORT 5005
 
 using namespace std;
@@ -88,14 +88,16 @@ int main(){
 			float rightStick_Y = addDeadzone((float)state.Gamepad.sThumbRY / 32767, 0.15);
 			float leftTrigger = (float)state.Gamepad.bLeftTrigger / 255;
 			float rightTrigger = (float)state.Gamepad.bRightTrigger / 255;
+			int ButtonSelect = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_BACK) != 0) ? 1 : 0;
 
 			string sendM = toString(leftStick_X) + "|" +  
 				toString(leftStick_Y) + "|" + 
 				toString(rightStick_X) + "|" + 
 				toString(rightStick_Y) + "|" + 
 				toString(leftTrigger) + "|" + 
-				toString(rightTrigger) + "|";
-
+				toString(rightTrigger) + "|" +
+				toString(ButtonSelect) + "|";
+			
 			const char * buffer = sendM.c_str();
 			send(conn, buffer, 100, 0);
 
